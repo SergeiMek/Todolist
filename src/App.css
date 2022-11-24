@@ -20,3 +20,7 @@
 .is-done{
     opacity: 0.5;
 }
+.addItemForm{
+    display: flex;
+    height: 25px;
+}
