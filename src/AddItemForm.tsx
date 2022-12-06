@@ -9,7 +9,6 @@ export type AddItemPropsType = {
 }
 
 export const AddItemForm = (props: AddItemPropsType) => {
-
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 
