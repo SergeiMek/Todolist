@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 
@@ -7,14 +7,12 @@ import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@
 import {Menu} from "@mui/icons-material";
 import {
     addTodolistAC,
-    changeTodolistFilterAC,
     changeTodolistTitleAC,
     removeTodolistAC,
-    todolistsReducer
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
+
 
 export type FilterValueType = "all" | "completed" | "active";
 
@@ -28,27 +26,22 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
-
+    console.log("App is called")
     const dispatch = useDispatch();
     const todolists = useSelector<AppRootState, Array<TodolistType>>(state => state.todolists)
 
 
-    function changeFilter(value: FilterValueType, todolistId: string) {
-        dispatch(changeTodolistFilterAC(todolistId, value))
-    }
-
-
-    function removeTodolist(todolistId: string) {
+    const removeTodolist = useCallback((todolistId: string) => {
         dispatch(removeTodolistAC(todolistId))
-    }
+    }, [])
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
-    }
+    }, [])
 
-    function changeTodolistTitle(newValue: string, todolistId: string) {
+    const changeTodolistTitle = useCallback((newValue: string, todolistId: string) => {
         dispatch(changeTodolistTitleAC(todolistId, newValue))
-    }
+    }, [])
 
     return (
         <div className="App">
@@ -68,14 +61,12 @@ function AppWithRedux() {
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map(tl => {
-
                         return <Grid item>
                             <Paper style={{padding: "20px"}}>
                                 <Todolist
                                     key={tl.id}
                                     id={tl.id}
                                     title={tl.title}
-                                    changeFilter={changeFilter}
                                     filter={tl.filter}
                                     removeTodolist={removeTodolist}
                                     changeTodolistTitle={changeTodolistTitle}
