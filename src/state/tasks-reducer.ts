@@ -1,6 +1,7 @@
 import {AddTodolistActionType, RemoveTodolistActionType, todolistID1, todolistID2} from "./todolists-reducer";
-import {TasksStateType, TodolistType} from "../AppWithRedux";
+import {TasksStateType} from "../AppWithRedux";
 import {v1} from "uuid";
+import {TaskPriorities, TasksStatuses} from "../api/todolists-api";
 
 
 export type RemoveTaskActionType = {
@@ -17,7 +18,7 @@ export type AddTaskActionType = {
 
 export type ChangeTaskStatusActionType = {
     type: 'CHANGE-TASK-STATUS'
-    isDone: boolean
+    status: TasksStatuses
     taskId: string
     todolistId: string
 }
@@ -40,15 +41,15 @@ type actionsType =
 
 let initialState:TasksStateType = {
     [todolistID1]: [
-        {id: v1(), title: "CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "React", isDone: false},
-        {id: v1(), title: "Redux", isDone: false}
+        {id: v1(), title: "CSS", status: TasksStatuses.Completed,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID1,priority:TaskPriorities.Low,description:""},
+        {id: v1(), title: "JS", status: TasksStatuses.Completed,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID1,priority:TaskPriorities.Low,description:""},
+        {id: v1(), title: "React", status: TasksStatuses.New,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID1,priority:TaskPriorities.Low,description:""},
+        {id: v1(), title: "Redux", status: TasksStatuses.New,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID1,priority:TaskPriorities.Low,description:""}
     ],
     [todolistID2]: [
-        {id: v1(), title: "Book", isDone: true},
-        {id: v1(), title: "Mongo", isDone: true},
-        {id: v1(), title: "Angular", isDone: false},
+        {id: v1(), title: "Book", status: TasksStatuses.Completed,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID2,priority:TaskPriorities.Low,description:""},
+        {id: v1(), title: "Mongo", status: TasksStatuses.Completed,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID2,priority:TaskPriorities.Low,description:""},
+        {id: v1(), title: "Angular", status: TasksStatuses.New,addedDate:"",startDate:"",order:1,deadline:"",todoListId:todolistID2,priority:TaskPriorities.Low,description:""},
     ]
 }
 
@@ -61,12 +62,12 @@ export const tasksReducer = (state: TasksStateType =initialState, action: action
 
             return {
                 ...state,
-                [action.todolistId]: [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistId]]
+                [action.todolistId]: [{id: v1(), title: action.title, status: TasksStatuses.New,addedDate:"",startDate:"",order:1,deadline:"",todoListId:action.todolistId,priority:TaskPriorities.Low,description:""}, ...state[action.todolistId]]
             }
         }
         case 'CHANGE-TASK-STATUS': {
 
-            return {...state,[action.todolistId]:state[action.todolistId].map(t=>t.id === action.taskId?{...t,isDone:action.isDone}:t)}
+            return {...state,[action.todolistId]:state[action.todolistId].map(t=>t.id === action.taskId?{...t,status:action.status}:t)}
         }
         case 'CHANGE-TASK-TITLE': {
             let stateCopy = {...state}
@@ -98,8 +99,8 @@ export const addTaskAC = (title: string, todolistId: string): AddTaskActionType 
     return {type: 'ADD-TASK', title, todolistId}
 }
 
-export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: string): ChangeTaskStatusActionType => {
-    return {type: 'CHANGE-TASK-STATUS', taskId, isDone, todolistId}
+export const changeTaskStatusAC = (taskId: string, status: TasksStatuses, todolistId: string): ChangeTaskStatusActionType => {
+    return {type: 'CHANGE-TASK-STATUS', taskId, status, todolistId}
 }
 export const changeTaskTitleAC = (taskId: string, title: string, todolistId: string): ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', taskId, title, todolistId}
