@@ -1,16 +1,13 @@
 import React, {useCallback, useEffect} from "react";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {AddItemForm} from "./components/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {useAppDispatch, useAppSelector} from "./state/store";
 import {
-    addTaskAC,
     addTasksTC,
-    changeTaskStatusAC,
-    updateTaskStatusTC,
     fetchTasksTC,
-    removeTasksTC
+    removeTasksTC, updateTaskTC
 } from "./state/tasks-reducer";
 import {changeTodolistFilterAC,FilterValueType} from "./state/todolists-reducer";
 import {Task} from "./Task";
@@ -44,7 +41,7 @@ export const Todolist = React.memo((props: propsType) => {
         }, [])
 
         const changeTaskStatus = useCallback((taskId: string, status: TasksStatuses, todolistId: string) => {
-            dispatch(updateTaskStatusTC(taskId, todolistId, status))
+            dispatch(updateTaskTC(taskId, todolistId, {status}))
         }, [])
 
 

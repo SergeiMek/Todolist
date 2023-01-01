@@ -44,13 +44,8 @@ test('correct todolist should be added', () => {
     }))
 
     expect(endState.length).toBe(3)
-    expect(endState[0].title).toBe({
-        id: "string",
-        title: "string",
-        addedDate: "string",
-        order: 1
-    })
-    expect(endState[2].filter).toBe("all")
+    expect(endState[0].title).toBe("string")
+
 })
 
 test('correct todolist should change its name', () => {

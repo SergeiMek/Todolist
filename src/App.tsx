@@ -1,29 +1,23 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "./components/AddItemForm";
 import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {
-    addTodolistAC, addTodolistTC,
-    changeTodolistTitleAC, changeTodolistTitleTC, fetchTodolistTC,
-    removeTodolistAC, removeTodolistTC, TodolistDomainType,
+    addTodolistTC,
+    changeTodolistTitleTC, fetchTodolistTC,
+    removeTodolistTC,
 } from "./state/todolists-reducer";
 import {useAppDispatch, useAppSelector} from "./state/store";
 import {TaskType} from './api/todolists-api';
 
 
-
-
-
-/*export type TasksStateType = {
-    [x: string]: Array<{ id: string, title: string, isDone: boolean }>
-}*/
 export type TasksStateType = {
     [x: string]: Array<TaskType>
 }
 
-function AppWithRedux() {
+function App() {
     console.log("App is called")
     const dispatch = useAppDispatch();
     const todolists = useAppSelector(state => state.todolists)
@@ -81,4 +75,4 @@ function AppWithRedux() {
 }
 
 
-export default AppWithRedux;
+export default App;
