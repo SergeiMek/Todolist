@@ -3,8 +3,14 @@ import {
     removeTodolistAC,
     setTodolistsAC,
 } from "./todolists-reducer";
-import {TasksStateType} from "../App";
-import {TaskPriorities, TasksStatuses, TaskType, todolistsAPI, UpdateTaskModelType} from "../api/todolists-api";
+import {
+    TaskPriorities,
+    TasksStateType,
+    TasksStatuses,
+    TaskType,
+    todolistsAPI,
+    UpdateTaskModelType
+} from "../api/todolists-api";
 import {/**/Dispatch} from "redux";
 import {ActionsType, AppRootState} from "./store";
 

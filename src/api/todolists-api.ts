@@ -9,6 +9,10 @@ const instance = axios.create({
 
 })
 
+export type TasksStateType = {
+    [x: string]: Array<TaskType>
+}
+
 export enum TasksStatuses {
     New = 0,
     InProgress = 1,

@@ -4,9 +4,8 @@ import {
     setTasksAC,
     tasksReducer, updateTasksAC
 } from './tasks-reducer';
-import {TasksStateType} from "../App";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
-import {TaskPriorities, TasksStatuses} from '../api/todolists-api';
+import {TaskPriorities, TasksStateType, TasksStatuses} from '../api/todolists-api';
 import {v1} from "uuid";
 
 export let todolistID1 = v1();
