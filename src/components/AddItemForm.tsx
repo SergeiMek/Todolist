@@ -5,16 +5,17 @@ import {ControlPoint} from "@mui/icons-material";
 
 export type AddItemPropsType = {
     addItem: (title: string) => void
+    disabled?:boolean
 
 }
 
-export const AddItemForm =React.memo( (props: AddItemPropsType) => {
+export const AddItemForm =React.memo( ({addItem,disabled = false}: AddItemPropsType) => {
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 console.log("AddItemForm is called")
     const addTask = () => {
         if (newTaskTitle.trim() !== "") {
-            props.addItem(newTaskTitle)
+            addItem(newTaskTitle)
             setNewTaskTitle("")
             setError(null)
         } else {
@@ -39,12 +40,8 @@ console.log("AddItemForm is called")
 
     return <div>
         <div >
-            {/* <input value={newTaskTitle}
-               onChange={onNewTitleChangeHandler}
-               onKeyPress={onKeyPressHandler}
-               className={error ? "error" : ""}
-        />*/}
             <TextField value={newTaskTitle}
+                       disabled={disabled}
                        label={"Type value"}
                        variant={"outlined"}
                        onChange={onNewTitleChangeHandler}
@@ -52,7 +49,7 @@ console.log("AddItemForm is called")
                        error={!!error}
                        helperText={error}
             />
-            <IconButton onClick={addTask} color={"primary"}>
+            <IconButton onClick={addTask} color={"primary"} disabled={disabled}>
                 <ControlPoint/>
             </IconButton>
         </div>

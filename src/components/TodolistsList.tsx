@@ -3,11 +3,12 @@ import React, {useCallback} from "react";
 import {addTodolistTC, changeTodolistTitleTC, removeTodolistTC} from "../state/todolists-reducer";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "./AddItemForm";
-import {Todolist} from "../Todolist";
+import {Todolist} from "./Todolist";
 
 export const TodolistList =()=>{
     const dispatch = useAppDispatch();
     const todolists = useAppSelector(state => state.todolists)
+    const entityStatus = useAppSelector(state => state.app.status)
 
     const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
@@ -23,7 +24,7 @@ export const TodolistList =()=>{
 
     return <>
         <Grid container style={{padding: "20px"}}>
-            <AddItemForm addItem={addTodolist}/>
+            <AddItemForm addItem={addTodolist} disabled={entityStatus === 'loading'}/>
         </Grid>
         <Grid container spacing={3}>
             {todolists.map(tl => {
@@ -36,6 +37,7 @@ export const TodolistList =()=>{
                             filter={tl.filter}
                             removeTodolist={removeTodolist}
                             changeTodolistTitle={changeTodolistTitle}
+                            entityStatus={tl.entityStatus}
                         />
                     </Paper>
                 </Grid>
