@@ -146,8 +146,10 @@ export const updateTaskTC = (taskId: string, todolistId: string, domainModel: Up
     }
 
     todolistsAPI.updateTask(todolistId, taskId, apiModel).then(res => {
+        dispatch(setAppStatusAC('loading'))
         if (res.data.resultCode === 0) {
             dispatch(updateTasksAC(taskId, domainModel, todolistId))
+            dispatch(setAppStatusAC('succeeded'))
         } else {
             handleServerAppError(res.data, dispatch)
         }

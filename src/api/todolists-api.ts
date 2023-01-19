@@ -20,12 +20,12 @@ export enum TasksStatuses {
     Draft = 3
 }
 
-export enum TaskPriorities{
-    Low =0,
-    Middle =1,
-    Hi =2,
-    Urgently =3,
-    Later=4
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
 }
 
 export type TaskType = {
@@ -50,7 +50,8 @@ export type TodolistType = {
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    data: D
+    data: D,
+    fieldsErrors?: Array<string>
 }
 
 type TasksResponseType = {
@@ -66,6 +67,13 @@ export type UpdateTaskModelType = {
     priority: TaskPriorities
     startDate: string
     deadline: string
+}
+
+export type  LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
 }
 
 
@@ -89,10 +97,22 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     createTask(todolistId: string, taskTitle: string) {
-        return instance.post<ResponseType<{item:TaskType}>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+    }
+}
+
+export const authAPI = {
+    login(date: LoginParamsType) {
+        return instance.post<ResponseType<{ userId?: number }>>('auth/login', date)
+    },
+    me() {
+        return instance.get<ResponseType<{ id: number, login: string, email: string }>>('auth/me')
+    },
+    logout() {
+        return instance.delete<ResponseType<{ userId?: number }>>('auth/login')
     }
 }
 
